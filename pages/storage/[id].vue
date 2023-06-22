@@ -3,13 +3,10 @@ import { ref, computed, watchEffect } from "vue"
 import useStorageZones, { storageFiles } from "../../use/useStorageZones";
 // import UploadFileModal from "../components/UploadFileModal.vue";
 // import BreadCrumbsComp from "../components/BreadCrumbsComp.vue";
-// import UiLoading from "../components/ui/UiLoading.vue";
 // import ImageModal from "../components/ImageModal.vue";
 
 import usePath from '../../use/usePath';
-// import IconImageView from '../components/icons/IconImageView.vue';
 // import UiModal from "../components/ui/UiModal.vue";
-// import DisplayFilesByType from "../components/DisplayFilesByType.vue";
 
 const { currentPath, changePath } = usePath();
 
@@ -58,8 +55,32 @@ const imgURL = computed(() => {
 </script>
 <template>
     <div class="container my-6">
-        <!-- <BreadCrumbsComp /> -->
-        
+        <StorageBreadCrumbs />
+            <div class="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
+                    <UButton @click="showUploadFileModal" class="btn btn-success">
+                        <Icon name="bx:image-add" class="w-6 h-6" />
+                        Upload File
+                    </UButton>
+                    <UButton @click="showCreateFolderModal" class="btn btn-primary">
+                        <Icon name="bx:bxs-folder-plus" class="w-6 h-6" />
+                        Create a Folder
+                    </UButton>
+                    <UButton @click="refreshStorageFiles" class="btn btn-info bg-opacity-20 border-opacity-20">
+                        <Icon name="bx:refresh" class="w-6 h-6" />
+                        Refresh
+                    </UButton>
+                    <select class="select md:max-w-[200px] " v-model="pullZoneUrl">
+                        <option disabled>Select Pull Zone</option>
+                        <option v-for="item in pullZones" :key="item" :value="item">{{ item }}</option>
+
+                    </select>
+                    <div class="form-control ml-auto">
+                        <label class="label cursor-pointer">
+                            <span class="label-text mr-2">Show Images</span>
+                            <input type="checkbox" class="toggle" v-model="showImages" />
+                        </label>
+                    </div>
+                </div>
 
         <div v-if="!pullZoneUrl && !isLoading" class="my-6">
             <div class="alert alert-error text-white">
@@ -78,16 +99,16 @@ const imgURL = computed(() => {
                 <div v-for="item in storageFiles" class="rounded-sm overflow-hidden cursor-pointer" :key="item.Guid">
                     <div v-if="!item.IsDirectory" @click.prevent="() => { showImageModal = true; objectGuid = item.Guid }"
                         class="w-full h-full">
-                        <DisplayFilesByType v-if="showImages" :fileName="item.ObjectName" :fileUrl="imgURL"
-                            :showFile="showImages"></DisplayFilesByType>
+                        <StorageFileType v-if="showImages" :fileName="item.ObjectName" :fileUrl="imgURL"
+                            :showFile="showImages"></StorageFileType>
                         <div v-else class="aspect-square flex flex-col justify-center p-2">
-                            <IconImageView class="w-2/3 mx-auto h-auto text-gray-600" />
+                            <Icon name="ph:image-light" class="w-2/3 mx-auto h-auto text-gray-300" />
                             <span class="truncate text-center text-md">{{ item.ObjectName }}</span>
                         </div>
                     </div>
                     <div v-else @click.prevent="changePath(item.ObjectName)"
                         class="w-full h-full aspect-square cursor-pointer text-xl flex flex-col relative justify-center">
-                        <IconFolderColored class="w-2/3 mx-auto h-auto" />
+                        <UiIconFolder class="w-2/3 mx-auto h-auto" />
                         <span class="truncate text-center text-md">{{ item.ObjectName }}</span>
                     </div>
                 </div>

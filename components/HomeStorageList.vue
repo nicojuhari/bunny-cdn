@@ -27,7 +27,7 @@ const refreshStorageFiles = async () => {
 }
 </script>
 <template>
-    <div class="mx-auto my-20">
+    <div class="container my-20">
         <h2 class="text-center my-6 text-xl font-medium">Your Storages</h2>
         <div class="flex flex-col md:flex-row gap-6">
             <UButton variant="outline" @click="refreshStorageFiles">
@@ -40,7 +40,7 @@ const refreshStorageFiles = async () => {
             </UButton>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <UCard v-for="storage in storageZones" class="card max-w-[400px] mx-auto w-full">
+            <UCard v-for="storage in storageZones">
                 <div class="flex justify-center items-center flex-col gap-6">
                     <div class="text-center font-medium text-2xl truncate">{{ storage.Name }}</div>
                     <div class="text-center flex justify-between gap-6 w-full">
@@ -60,4 +60,5 @@ const refreshStorageFiles = async () => {
             </UCard>
         </div>
     <UiLoading v-if="isLoading" />
-</div></template>
+</div>
+</template>

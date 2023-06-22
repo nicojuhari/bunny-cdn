@@ -9,5 +9,5 @@ export default defineNuxtConfig({
     // Add cors headers on API routes
     '/api/**': { cors: true },
   },
-  devtools: { enabled: true }
+  devtools: { enabled: false }
 })
