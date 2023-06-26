@@ -3,9 +3,8 @@ import { computed, ref } from "vue";
 import usePath from "../../use/usePath"
 import useStorageZones from '../../use/useStorageZones';
 
-const storageConfigs = ref(JSON.parse(window.localStorage.getItem('storageConfigs')))
 const { currentPath, changePath } = usePath();
-const { deleteFileFromServer, getStorageFiles } = useStorageZones()
+const { deleteFileFromServer } = useStorageZones()
 
 const breadCrumbs = computed(() => {
     let crumbs = []
@@ -26,7 +25,8 @@ const deleteFolder = async (folder) => {
 
     if (!currentPath.value) return;
     if (!confirm("Are you sure you want to delete this folder?")) return;
-    let url = `https://${storageConfigs.value.url}/${storageConfigs.value.name}/${currentPath.value}`;
+    // let url = `https://${storageConfigs.value.url}/${storageConfigs.value.name}/${currentPath.value}`;
+    let url = '';
     let result = await deleteFileFromServer(url);
 
     if (result.HttpCode == 200) {
@@ -37,9 +37,6 @@ const deleteFolder = async (folder) => {
     }
 }
 
-    // const deleteFolder = () => {
-    //     console.log(currentPath.value)
-    // }
 </script>
 <template>
     <section>

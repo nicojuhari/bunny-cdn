@@ -7,6 +7,6 @@ export default defineEventHandler(async (event) => {
         let response = await axios.request(body)
         return response.data
     } catch (err) {
-        console.error(err)
+        console.error('swsss============', err)
     }
 })

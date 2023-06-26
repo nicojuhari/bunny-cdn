@@ -1,5 +1,4 @@
 import { ref } from "vue";
-// import { useRoute, useRouter } from "vue-router";
 
 const currentPath = ref(null);
 
@@ -8,10 +7,9 @@ export default function usePath() {
     const router = useRouter();
 
     currentPath.value = route.hash.replace("#", "");
-    //console.log(currentPath.value)
 
     const changePath = (val, staticVal = false) => {
-        console.log(val);
+        
         if (val == currentPath.value) return;
         let newHash = "";
 
@@ -23,6 +21,7 @@ export default function usePath() {
         currentPath.value = newHash;
 
         if (newHash.indexOf("#") != 0 && newHash != "") newHash = "#" + newHash;
+        console.log(newHash);
         router.replace({ hash: newHash });
     };
 

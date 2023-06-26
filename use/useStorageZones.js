@@ -5,12 +5,12 @@ import { useStorage } from "@vueuse/core";
 export const storageZones = useStorage("bunny-cdn-api-zones", []);
 export const accountAPIkey = useStorage("bunny-cdn-api-key", '');
 export const storageFiles = ref([]);
+export const pullZones = ref([]);
+export const activePullZoneURL = ref("");
 
 export default function useStorageZone() {
     
     const route = useRoute();
-
-    // const { backEndUrl } = useConfigs();
     const backEndUrl = "/api/send-request";
     const storageInfo = ref(null);
     const isLoading = ref(false);
@@ -59,9 +59,8 @@ export default function useStorageZone() {
             });
 
             storageFiles.value = result.data;
-            console.log("Files fetched successfully");
+            // console.log("Files fetched successfully");
         } catch (err) {
-            console.log(err);
             console.error(err.message);
         } finally {
             isLoading.value = false;
