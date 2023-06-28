@@ -10,44 +10,39 @@ const { currentPath } = usePath();
 const { getStorageFiles } = useStorageZones();
 
 const showCreateFolderModal = ref(false)
+const showUploadFileModal = ref(false)
 
 const refreshStorageFiles = () => {
     showCreateFolderModal.value = false
+    showUploadFileModal.value = false
     getStorageFiles(currentPath.value)
-}
-
-const showUploadFileModal = () => {
-    showModal.value = true
-    createFolder.value = false
 }
 
 </script>
 <template>
     <div class="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
-                <UButton @click="showUploadFileModal" class="btn btn-success">
+                <UButton @click="showUploadFileModal = true" color="teal">
                     <Icon name="bx:image-add" class="w-6 h-6" />
                     Upload File
                 </UButton>
-                <UButton @click="showCreateFolderModal = true" class="btn btn-primary">
+                <UButton @click="showCreateFolderModal = true" color="orange">
                     <Icon name="bx:bxs-folder-plus" class="w-6 h-6" />
                     Create a Folder
                 </UButton>
-                <UButton @click="refreshStorageFiles" class="btn btn-info bg-opacity-20 border-opacity-20">
+                <UButton @click="refreshStorageFiles" variant="outline">
                     <Icon name="bx:refresh" class="w-6 h-6" />
                     Refresh
                 </UButton>
-                <select class="select md:max-w-[200px] " v-model="activePullZoneURL">
-                    <option disabled>Select Pull Zone</option>
-                    <option v-for="item in pullZones" :key="item" :value="item">{{ item }}</option>
-                </select>
+                <USelect class="select md:max-w-[200px] h-9" v-model="activePullZoneURL" :options="pullZones">
+                </USelect>
                 <div class="form-control ml-auto">
-                    <label class="label cursor-pointer">
-                        <span class="label-text mr-2">Show Images</span>
-                        <input type="checkbox" class="toggle" :value="modelValue"  @change="(e) => emit('update:modelValue', e.target.value)" />
-                    </label>
+                    <UCheckbox :value="modelValue" label="Show Images"  class="cursor-pointer" @change="(e) => emit('update:modelValue', !modelValue)"/>
                 </div>
             </div>
             <UModal v-model="showCreateFolderModal">
                 <ModalsCreateFolder @close="showCreateFolderModal = false" @uploaded="refreshStorageFiles"/>
+            </UModal>
+            <UModal v-model="showUploadFileModal">
+                <ModalsUploadFile @close="showUploadFileModal = false" @uploaded="refreshStorageFiles"/>
             </UModal>
 </template>

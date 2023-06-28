@@ -41,7 +41,7 @@ onBeforeUnmount(() => {
     activePullZoneURL.value = "";
 });
 
-const imgURL = computed(() => {
+const baseURL = computed(() => {
     return `https://${activePullZoneURL.value}/${currentPath.value}`
 })
 
@@ -50,6 +50,7 @@ const imgURL = computed(() => {
     <div class="container my-6">
         <ClientOnly>
             <StorageBreadCrumbs />
+         </ClientOnly>
             <StorageMenu v-model="showImages"/>
             <div v-if="!activePullZoneURL && !isLoading" class="my-6">
                 <div class="alert alert-error text-white">
@@ -64,8 +65,7 @@ const imgURL = computed(() => {
                     <div v-for="item in storageFiles" class="rounded-sm overflow-hidden cursor-pointer" :key="item.Guid">
                         <div v-if="!item.IsDirectory" @click.prevent="() => { showImageModal = true; objectGuid = item.Guid }"
                             class="w-full h-full">
-                            <StorageFileType v-if="showImages" :fileName="item.ObjectName" :fileUrl="imgURL"
-                                :showFile="showImages"></StorageFileType>
+                            <StorageFileType v-if="showImages" :fileName="item.ObjectName" :baseURL="baseURL"></StorageFileType>
                             <div v-else class="aspect-square flex flex-col justify-center p-2">
                                 <Icon name="ph:image-light" class="w-2/3 mx-auto h-auto text-gray-300" />
                                 <span class="truncate text-center text-md">{{ item.ObjectName }}</span>
@@ -80,7 +80,7 @@ const imgURL = computed(() => {
                 </div>
                 <div v-else class="text-center my-16">No Files in This Directory!</div>
             </section>
-        </ClientOnly>
+       
         <!-- <UploadFileModal v-if="showModal" @uploaded="hadleUploaded" @close="showModal = false" :pathUrl="currentPath"
             :createFolder="createFolder">
         </UploadFileModal>

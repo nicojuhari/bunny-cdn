@@ -53,7 +53,7 @@ const deleteFolder = async (folder) => {
                 </div>
             </div>
             <div v-if="breadCrumbs.length" class="ml-auto pl-4">
-                <UButton color="red" class="ml-auto !text-white cursor-pointer"
+                <UButton square color="red" class="ml-auto !text-white cursor-pointer"
                     @click="deleteFolder(breadCrumbs[breadCrumbs.length - 1])" title="Delete this folder">
                     <Icon name="ph:trash-light" class="w-6 h-6" />
                 </UButton>
