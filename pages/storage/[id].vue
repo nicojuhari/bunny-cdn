@@ -15,15 +15,8 @@ const showImages = ref(false)
 const { getStorageInfo, storageInfo, getStorageFiles, isLoading } = useStorageZones();
 
 getStorageInfo()
-// getStorageFiles()
-// //get Storage Files
-// watchEffect(() => {
-//     // storageFiles.value = []
-//     getStorageFiles(currentPath.value)
-// })
 
 watch(currentPath, () => {
-    console.log('currentPath changed')
     getStorageFiles(currentPath.value)
 }, { immediate: true })
 
@@ -44,6 +37,24 @@ onBeforeUnmount(() => {
 const baseURL = computed(() => {
     return `https://${activePullZoneURL.value}/${currentPath.value}`
 })
+
+const deleteFolder = async (folder) => {
+
+    console.log('deleteFolder')
+    alert('This feature is not available yet.')
+    // if (!currentPath.value) return;
+    // if (!confirm("Are you sure you want to delete this folder?")) return;
+    // // let url = `https://${storageConfigs.value.url}/${storageConfigs.value.name}/${currentPath.value}`;
+    // let url = '';
+    // let result = await deleteFileFromServer(url);
+
+    // if (result.HttpCode == 200) {
+    //     let newVal = currentPath.value.replace(folder.name + '/', '')
+    //     //currentPath.value = newVal
+
+    //     changePath(newVal, true)
+    // }
+}
 
 </script>
 <template>
@@ -80,14 +91,15 @@ const baseURL = computed(() => {
                 </div>
                 <div v-else class="text-center my-16">No Files in This Directory!</div>
             </section>
-       
-        <!-- <UploadFileModal v-if="showModal" @uploaded="hadleUploaded" @close="showModal = false" :pathUrl="currentPath"
-            :createFolder="createFolder">
-        </UploadFileModal>
-
-        <UiModal v-if="showImageModal" modalTitle="File Preview" @close="showImageModal = false">
-            <ImageModal :objectGuid="objectGuid" :pullZoneUrl="pullZoneUrl" @close="showImageModal = false" />
-        </UiModal> -->
-
+            <div class="mt-6 border-t py-4">
+                <div v-if="currentPath == ''">You are currently in the root folder</div>
+                <div v-else class="flex items-center">
+                    <div>You are currently in the folder: <span class="font-bold">{{ currentPath }}</span></div>
+                    <UButton color="red" size="xs" class="ml-auto !text-white cursor-pointer shrink-0"
+                        @click="deleteFolder(currentPath)" title="Delete this folder">
+                        <Icon name="ph:trash-light" class="w-6 h-6" /> Delete this Folder
+                    </UButton>
+                </div>
+            </div>
     </div>
 </template>

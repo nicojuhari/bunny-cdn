@@ -20,9 +20,9 @@ const showModal = ref(false);
                 </UButton>
             </div>
         </div>
-        <div class="container">
+        <div class="container my-6">
             <div class="font-medium text-2xl text-center">Terms and Conditions</div>
-            <UCard class="text-lg mt-8">
+            <div class="text-lg mt-8">
                         <ol class="flex flex-col gap-2 text-md list-decimal list-inside">
                             <li>This app is <strong>FREE</strong> to use, but check <a href="https://bunny.net/pricing/?ref=kw3bknywrh" target="_blank" class="font-medium">Bunny.net prices.</a></li>
                             <li>Your monthly bandwidth is used up by downloading and viewing the files.</li>
@@ -30,7 +30,7 @@ const showModal = ref(false);
                                 browser.</li>
                             <li>For your security, you can refresh your API key in the bunny.net dashboard at any time.</li>
                         </ol>
-                    </UCard>
+                    </div>
         </div>
         
         <UModal v-model="showModal" class="custom-class">
