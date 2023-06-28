@@ -35,8 +35,9 @@ const refreshStorageFiles = () => {
                 </UButton>
                 <USelect class="select md:max-w-[200px] h-9" v-model="activePullZoneURL" :options="pullZones">
                 </USelect>
-                <div class="form-control ml-auto">
-                    <UCheckbox :value="modelValue" label="Show Images"  class="cursor-pointer" @change="(e) => emit('update:modelValue', !modelValue)"/>
+                <div class="form-control ml-auto flex gap-4 items-center shrink-0 cursor-pointer">
+                    <UCheckbox :value="modelValue" id="show-images" class="cursor-pointer" @change="(e) => emit('update:modelValue', !modelValue)"/>
+                    <label for="show-images" class="cursor-pointer">Show Images</label>
                 </div>
             </div>
             <UModal v-model="showCreateFolderModal">

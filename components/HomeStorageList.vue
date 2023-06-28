@@ -49,12 +49,11 @@ const refreshStorageFiles = async () => {
                         <div class="flex flex-col w-1/2 items-center"><span class="text-sm">Size</span><strong>{{
                             (storage.StorageUsed / (1000 * 1000 * 1000)).toFixed(4) }} GB</strong></div>
                     </div>
-                    <div class="flex justify-between items-center flex-1 w-full">
-                        <UButton color="red" square variant="outline"
-                            @click="deleteStorage(storage.Id)">
-                            <Icon name="ph:trash-light" class="w-4 h-4"/>
+                    <div class="flex justify-between items-center w-full shrink-0">
+                        <UButton color="red" square variant="outline" @click="deleteStorage(storage.Id)">
+                            <Icon name="ph:trash-light" class="w-6 h-6"/>
                         </UButton>
-                        <UButton color="green" @click="$router.replace(`/storage/${storage.Id}`)">View</UButton>
+                        <UButton size="md" color="teal" class="shrink-0" @click="$router.replace(`/storage/${storage.Id}`)">View</UButton>
                     </div>
                 </div>
             </UCard>
