@@ -18,6 +18,13 @@ const isLoading = ref(false)
 const { deleteFileFromServer } = useFiles()
 
 const imgObj = computed(() => storageFiles?.value.find(img => img.Guid == props?.objectGuid))
+const imgSize = computed(() => {
+    if (!imgObj?.value) return 0;
+    if (imgObj?.value?.Length >= 1000000) return (imgObj?.value?.Length / 1000000).toFixed(2) + ' Mb'
+    else return (imgObj?.value?.Length / 1000).toFixed(2) + ' Kb'
+})
+
+console.log(imgObj?.value)
 
 const copyToClipboard = () => {
     isLoading.value = true;
@@ -55,6 +62,10 @@ const deleteImage = async () => {
                     <Icon name="ph:x-light" class="w-6 h-6 shrink-0 ml-auto cursor-pointer" @click="$emit('close')"/>
                 </div>
         <StorageFileType :fileName="imgObj.ObjectName" :fileUrl="`https://${activePullZoneURL}/${currentPath}${imgObj?.ObjectName}`"></StorageFileType>
+        <div class="flex justify-between">
+            <div>Size: {{ imgSize }} </div>
+            <div>Created at: {{ new Date(imgObj.DateCreated).toLocaleDateString() }} </div>
+        </div>
         <div class="flex mt-4 w-full gap-4 justify-end">
             <UButton variant="outline" color="red" square @click="deleteImage">
                 <Icon name="ph:trash-light" class="w-6 h-6" />
