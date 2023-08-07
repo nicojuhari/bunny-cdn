@@ -32,7 +32,7 @@ if(checkFileType(imgObj?.value?.ObjectName) == 'image') getImageDimensions(imgUR
 
 const copyToClipboard = () => {
     isLoading.value = true;
-    navigator.clipboard.writeText(imgURL);
+    navigator.clipboard.writeText(imgURL.value);
 
     setTimeout(() => {
         isLoading.value = false;
