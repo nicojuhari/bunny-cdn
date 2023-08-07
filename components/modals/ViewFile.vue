@@ -3,9 +3,11 @@ import { ref, computed } from "vue"
 import useFiles from '../../use/useFiles';
 import usePath from '../../use/usePath';
 import { storageFiles, activePullZoneURL } from '../../use/useStorageZones';
+import { getImageDimensions, checkFileType } from '../../utils'
 
+
+const { deleteFileFromServer } = useFiles()
 const { currentPath } = usePath();
-const emit = defineEmits(['close']);
 
 const props = defineProps({
     objectGuid: {
@@ -14,8 +16,10 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['close']);
+
 const isLoading = ref(false)
-const { deleteFileFromServer } = useFiles()
+const imgDimensions = ref({ width: 0, height: 0 })
 
 const imgObj = computed(() => storageFiles?.value.find(img => img.Guid == props?.objectGuid))
 const imgSize = computed(() => {
@@ -23,12 +27,12 @@ const imgSize = computed(() => {
     if (imgObj?.value?.Length >= 1000000) return (imgObj?.value?.Length / 1000000).toFixed(2) + ' Mb'
     else return (imgObj?.value?.Length / 1000).toFixed(2) + ' Kb'
 })
-
-console.log(imgObj?.value)
+const imgURL = computed(() => `https://${activePullZoneURL.value}/${currentPath.value}${imgObj?.value?.ObjectName}`)
+if(checkFileType(imgObj?.value?.ObjectName) == 'image') getImageDimensions(imgURL.value).then(val => { imgDimensions.value = val })
 
 const copyToClipboard = () => {
     isLoading.value = true;
-    navigator.clipboard.writeText(`https://${activePullZoneURL.value}/${currentPath.value}${imgObj?.value?.ObjectName}`);
+    navigator.clipboard.writeText(imgURL);
 
     setTimeout(() => {
         isLoading.value = false;
@@ -61,11 +65,13 @@ const deleteImage = async () => {
                     <div class="font-medium">{{ imgObj?.ObjectName }}</div>
                     <Icon name="ph:x-light" class="w-6 h-6 shrink-0 ml-auto cursor-pointer" @click="$emit('close')"/>
                 </div>
-        <StorageFileType :fileName="imgObj.ObjectName" :fileUrl="`https://${activePullZoneURL}/${currentPath}${imgObj?.ObjectName}`"></StorageFileType>
-        <div class="flex justify-between">
-            <div>Size: {{ imgSize }} </div>
-            <div>Created at: {{ new Date(imgObj.DateCreated).toLocaleDateString() }} </div>
+        <StorageFileType :fileName="imgObj?.ObjectName" :fileUrl="imgURL"></StorageFileType>
+        <div class="flex gap-4 justify-between">
+            <div class="flex flex-col text-center"><span class="text-sm">Size </span><strong>{{ imgSize }}</strong></div>
+            <div class="flex flex-col text-center" v-if="checkFileType(imgObj?.ObjectName) == 'image'"><span class="text-sm">W x H </span><strong>{{ imgDimensions.width }}px x {{ imgDimensions.height }}px </strong></div>
+            <div class="flex flex-col text-center"><span class="text-sm">Created at </span><strong>{{ new Date(imgObj?.DateCreated).toLocaleDateString() }}</strong> </div>
         </div>
+        
         <div class="flex mt-4 w-full gap-4 justify-end">
             <UButton variant="outline" color="red" square @click="deleteImage">
                 <Icon name="ph:trash-light" class="w-6 h-6" />

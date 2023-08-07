@@ -95,3 +95,14 @@ export const readFileFromURL = async (fileURL) => {
     }
     
 };
+
+export const getImageDimensions = (image) => {
+    return new Promise((resolved, rejected) => {
+        let i = new Image();
+        i.onload = function () {
+            resolved({ width: i.width, height: i.height });
+        };
+        i.src = image;
+    });
+};
+
