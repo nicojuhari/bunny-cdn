@@ -19,7 +19,7 @@ export default defineNuxtConfig({
             ],
         },
     },
-  modules: ['@nuxthq/ui', 'nuxt-icon', '@vueuse/nuxt'],
+  modules: ['nuxt-icon', '@nuxt/ui', '@vueuse/nuxt'],
   css: ['@/assets/css/styles.css'],
   routeRules: {
     // Homepage pre-rendered at build time
