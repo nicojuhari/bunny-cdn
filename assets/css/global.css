@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+  --color-blue-50: #f1f6fe;
+  --color-blue-100: #e2edfc;
+  --color-blue-200: #bfd9f8;
+  --color-blue-300: #87bbf2;
+  --color-blue-400: #4797e9;
+  --color-blue-500: #1f7ad8;
+  --color-blue-600: #115eb8;
+  --color-blue-700: #0f4a95;
+  --color-blue-800: #11417b;
+  --color-blue-900: #12335e;
+  --color-blue-950: #0d2344;
+}
+
+body{
+  background: #f8f8f8;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+    width: calc(100% - 3rem);
+}
+.min-h-dvh {
+    min-height: calc(100dvh - 56px - 56px);
+}
