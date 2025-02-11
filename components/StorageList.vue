@@ -27,9 +27,9 @@ const refreshStorageFiles = async () => {
 }
 </script>
 <template>
-    <div class="container space-y-8 py-24 shrink-0">
+    <div class="container py-24 shrink-0">
         <h2 class="text-center text-xl font-medium">Your Storages</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
             <UCard v-for="storage in storageZones">
                 <div class="flex justify-center items-center flex-col gap-6">
                     <div class="text-center font-medium text-2xl truncate">{{ storage.Name }}</div>
