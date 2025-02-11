@@ -30,15 +30,11 @@ const { currentPath } = usePath();
 };
 </script>
 <template>
-    <div class="p-4">
-        <div class="flex justify-between">
-            <div class="font-medium">Create a folder</div>
-            <Icon name="ph:x-light" class="w-6 h-6 shrink-0 ml-auto cursor-pointer" @click="$emit('close')"/>
-        </div>
-        <div class="mt-6">
+    <div>
             <label>Folder Name</label>
             <UInput type="text" v-model="folderName" class="input w-full"/>
+        <div class="text-right">
+            <UButton @click.prevent="sendToServer" class="mt-6 btn btn-brand-600 ml-auto">Create</UButton>
         </div>
-        <UButton @click.prevent="sendToServer" class="mt-6 btn btn-brand-600 ml-auto">Create</UButton>
     </div>
 </template>

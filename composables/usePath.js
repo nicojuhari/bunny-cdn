@@ -21,7 +21,6 @@ export default function usePath() {
         currentPath.value = newHash;
 
         if (newHash.indexOf("#") != 0 && newHash != "") newHash = "#" + newHash;
-        console.log(newHash);
         router.replace({ hash: newHash });
     };
 

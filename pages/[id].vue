@@ -3,19 +3,13 @@
     import useStorageZones, { storageFiles, pullZones, activePullZoneURL } from "@/composables/useStorageZones";
 
     const { showImages } = useConfigs()
-    const modal = useModal();
     const { currentPath, changePath } = usePath();
     const { deleteFileFromServer } = useFiles();
 
     const objectGuid = ref('');
-    
-    const showImageModal = (imgId) => {
-        console.log(imgId)
-        objectGuid.value = imgId
-        modal.open(ModalsViewFile, { title: 'Welcome'})
-    }
+    const showImageModal = ref(false)
 
-const { getStorageInfo, storageInfo, getStorageFiles, isLoading } = useStorageZones();
+    const { getStorageInfo, storageInfo, getStorageFiles, isLoading } = useStorageZones();
 
 getStorageInfo()
 
@@ -73,18 +67,13 @@ const deleteFolder = async () => {
             <StorageBreadCrumbs />
         </ClientOnly>
         <StorageMenu />
-        <div v-if="!activePullZoneURL && !isLoading" class="my-6">
-            <div class="alert alert-red text-white">
-                Please connect your Bunny.net storage to a Pull Zone.
-            </div>
-            <!-- <img src="/bunny.net-connect-pull-zone.png" class="my-4 rounded-lg border"> -->
-        </div>
+        <UAlert v-if="!activePullZoneURL && !isLoading" class="my-6" color="error" title="Please connect your Bunny.net storage to a Pull Zone." />
         <Loading v-if="isLoading" />
         <div v-else class="my-8">
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
                 v-if="storageFiles?.length && activePullZoneURL">
                 <div v-for="item in storageFiles" class="rounded-sm overflow-hidden cursor-pointer" :key="item.Guid">
-                    <div v-if="!item.IsDirectory" @click.prevent="showImageModal(item.Guid)"
+                    <div v-if="!item.IsDirectory" @click.prevent="() => { showImageModal = true;  objectGuid = item.Guid; }"
                         class="w-full h-full">
                         <StorageFileType v-if="showImages" :fileName="item.ObjectName" :baseURL="baseURL"></StorageFileType>
                         <div v-else class="aspect-square flex flex-col justify-center p-2">
@@ -111,8 +100,10 @@ const deleteFolder = async () => {
                 </UButton>
             </div>
         </div>
-        <!-- <UModal v-model="showImageModal">
-            <ModalsViewFile :objectGuid="objectGuid" />
-        </UModal> -->
+        <UModal v-model:open="showImageModal" title="View File">
+            <template #body>
+                <ModalsViewFile :objectGuid="objectGuid" @close="() => { showImageModal = false; objectGuid = ''}" />
+            </template>
+        </UModal>
     </div>
 </template>

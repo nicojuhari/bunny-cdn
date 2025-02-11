@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import axios from "axios";
-import { storageZones } from "./useStorageZones";
+import { storageZones, storageFiles } from "./useStorageZones";
 
 
 export default function useFiles() {
@@ -32,7 +32,7 @@ export default function useFiles() {
         }
     };
 
-    const deleteFileFromServer = async (path, guid = "") => {
+    const deleteFileFromServer = async (path, imgObj) => {
         isLoading.value = true;
 
         let url = `https://${storageObj?.StorageHostname}/${storageObj.Name}/${path}`;
@@ -45,6 +45,13 @@ export default function useFiles() {
                 },
             });
             // console.log(result.data.Message);
+
+            //remove from local
+            setTimeout(() => {
+                const idx = storageFiles.value.indexOf(imgObj.value);
+                storageFiles.value.splice(idx, 1);
+            }, 1000)
+
             return result.data;
         } catch (e) {
             console.log(e);

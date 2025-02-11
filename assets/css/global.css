@@ -17,6 +17,7 @@
 
 body{
   background: #f8f8f8;
+  color: rgb(24, 24, 24);
 }
 
 .container {
@@ -27,4 +28,8 @@ body{
 }
 .min-h-dvh {
     min-height: calc(100dvh - 56px - 56px);
+}
+
+button {
+  cursor: pointer;
 }

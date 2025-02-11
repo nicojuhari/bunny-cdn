@@ -87,12 +87,8 @@ const sendToServer = async () => {
 </script>
 
 <template>    
-        <div class="p-4 relative">
-            <div class="flex justify-between">
-                <div class="font-medium">Upload a file</div>
-                <Icon name="ph:x-light" class="w-6 h-6 shrink-0 ml-auto cursor-pointer" @click="$emit('close')"/>
-            </div>
-            <form class="mt-6" v-if="!src">
+        <div class="relative">
+            <form v-if="!src">
                 <input type="file" name="image" ref="file" id="image-upload" @change="handleUpload"
                     accept="image/* | video/* | audio/* | .pdf" class="hidden" />
                 <div>
@@ -115,7 +111,7 @@ const sendToServer = async () => {
                 </div>
             </form>
             <div v-else>
-                <div class="mt-6 flex justify-between items-center">
+                <div class="flex justify-between items-center">
                     <div class="truncate">
                         File Name: <span class="text-gray-400"
                             :class="{ 'line-through !text-green ': newFileName.length > 2 }">{{ oldFileName }}.{{
@@ -136,7 +132,7 @@ const sendToServer = async () => {
                         New file name: {{ prepareFileName(newFileName) }}.{{ fileExtension }}
                     </div>
                 </div>
-                <UButton @click.prevent="sendToServer" block class="mt-6" color="teal">Upload</UButton>
+                <UButton @click.prevent="sendToServer" block class="mt-6" color="neutral" variant="soft">Upload</UButton>
             </div>
             <Loading v-if="isLoading" />
     </div>

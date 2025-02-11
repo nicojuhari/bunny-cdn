@@ -41,7 +41,7 @@ const copyToClipboard = () => {
 const deleteImage = async () => {
     if (!confirm("Are you sure you want to delete this file?")) return;
 
-    let result = await deleteFileFromServer(currentPath.value + imgObj?.value.ObjectName);
+    let result = await deleteFileFromServer(currentPath.value + imgObj?.value.ObjectName, imgObj);
 
     if (result.HttpCode == 200) {
 
@@ -50,35 +50,30 @@ const deleteImage = async () => {
             // remove object from array 
             emit('close');
 
-            const idx = storageFiles.value.indexOf(imgObj.value)
-            storageFiles.value.splice(idx, 1)
-
         }, 600);
 
     }
 }
 </script>
 <template>
-    <div class="p-4">
+    <div>
         <div class="flex justify-between my-2">
                     <div class="font-medium">{{ imgObj?.ObjectName }}</div>
-                    <Icon name="ph:x-light" class="w-6 h-6 shrink-0 ml-auto cursor-pointer" @click="$emit('close')"/>
-                </div>
+        </div>
         <StorageFileType :fileName="imgObj?.ObjectName" :fileUrl="imgURL"></StorageFileType>
         <div class="flex gap-4 justify-between">
             <div class="flex flex-col text-center"><span class="text-sm">Size </span><strong>{{ imgSize }}</strong></div>
             <div class="flex flex-col text-center" v-if="checkFileType(imgObj?.ObjectName) == 'image'"><span class="text-sm">W x H </span><strong>{{ imgDimensions.width }}px x {{ imgDimensions.height }}px </strong></div>
             <div class="flex flex-col text-center"><span class="text-sm">Created at </span><strong>{{ new Date(imgObj?.DateCreated).toLocaleDateString() }}</strong> </div>
         </div>
-        
-        <div class="flex mt-4 w-full gap-4 justify-end">
-            <UButton variant="soft" color="red" square @click="deleteImage" icon="i-ph-trash-light">
-            </UButton>
-            <UButton  color="teal" @click="copyToClipboard">
-                Copy URL
-                <UIcon v-if="isLoading" name="svg-spinners:180-ring" dynamic class="w-6 h-6" />
-                <UIcon v-else name="i-ph-copy-light" class="w-6 h-6" />
-            </UButton>
-        </div>
+       <div class="flex mt-6 w-full gap-6 justify-end">
+                        <UButton variant="soft" color="error" square @click="deleteImage" icon="i-ph-trash-light">
+                        </UButton>
+                        <UButton  color="neutral" variant="soft" @click="copyToClipboard" class="cursor-pointer">
+                            Copy URL
+                            <UIcon v-if="isLoading" name="svg-spinners:180-ring" dynamic class="w-6 h-6" />
+                            <UIcon v-else name="i-ph-copy-light" class="w-6 h-6" />
+                        </UButton>
+                    </div>
     </div>
 </template>
