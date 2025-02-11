@@ -2,12 +2,12 @@
     import ModalsViewFile from '@/components/modals/ViewFile.vue'; 
     import useStorageZones, { storageFiles, pullZones, activePullZoneURL } from "@/composables/useStorageZones";
 
+    const { showImages } = useConfigs()
     const modal = useModal();
     const { currentPath, changePath } = usePath();
     const { deleteFileFromServer } = useFiles();
 
     const objectGuid = ref('');
-    const showImages = ref(false)
     
     const showImageModal = (imgId) => {
         console.log(imgId)
@@ -72,7 +72,7 @@ const deleteFolder = async () => {
         <ClientOnly>
             <StorageBreadCrumbs />
         </ClientOnly>
-        <StorageMenu v-model="showImages" />
+        <StorageMenu />
         <div v-if="!activePullZoneURL && !isLoading" class="my-6">
             <div class="alert alert-red text-white">
                 Please connect your Bunny.net storage to a Pull Zone.

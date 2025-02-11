@@ -1,8 +1,7 @@
 <script setup>
 import useStorageZones, { pullZones, activePullZoneURL } from "../../../composables/useStorageZones";
 
-const props = defineProps(['modelValue'])
-const emit = defineEmits(['update:modelValue'])
+const { showImages } = useConfigs() 
 
 const { currentPath } = usePath();
 const { getStorageFiles } = useStorageZones();
@@ -19,12 +18,12 @@ const refreshStorageFiles = () => {
 </script>
 <template>
     <div class="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
-                <UButton @click="showUploadFileModal = true" color="teal">
-                    <Icon name="bx:image-add" class="w-6 h-6" />
+                <UButton @click="showUploadFileModal = true" color="primary">
+                    <Icon name="i-ph-plus-light" class="w-6 h-6" />
                     Upload File
                 </UButton>
-                <UButton @click="showCreateFolderModal = true" color="orange">
-                    <Icon name="bx:bxs-folder-plus" class="w-6 h-6" />
+                <UButton @click="showCreateFolderModal = true" color="neutral">
+                    <Icon name="i-ph-folder-simple-plus" class="w-6 h-6" />
                     Create a Folder
                 </UButton>
                 <UButton @click="refreshStorageFiles" variant="outline">
@@ -34,7 +33,7 @@ const refreshStorageFiles = () => {
                 <USelect class="select md:max-w-[200px] h-9" v-model="activePullZoneURL" :options="pullZones">
                 </USelect>
                 <div class="form-control ml-auto flex gap-4 items-center shrink-0 cursor-pointer">
-                    <UCheckbox :value="modelValue" id="show-images" class="cursor-pointer" @change="(e) => emit('update:modelValue', !modelValue)"/>
+                    <UCheckbox v-model="showImages" id="show-images" class="cursor-pointer"/>
                     <label for="show-images" class="cursor-pointer">Show Images</label>
                 </div>
             </div>
