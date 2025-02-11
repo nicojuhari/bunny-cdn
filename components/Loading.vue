@@ -5,7 +5,7 @@
 .loader {
     --loader-size: 60px;
     --loader-border: 6px;
-    --loader-color: #fff;
+    --loader-color: #434343;
 
     border: var(--loader-border) solid transparent;
     border-radius: 50%;

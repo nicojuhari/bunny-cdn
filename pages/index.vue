@@ -1,9 +1,9 @@
 <script setup>
 
-import useStorageZone from '~/composables/useStorageZones';
+import { storageZones } from '~/composables/useStorageZones';
 
 useHead({
-    title: 'Streamline Your Bunny.net CDN: Free Asset Management Tool',
+    title: 'Simple UI for Bunny CDN: Free Asset Management Tool',
     meta: [
         { name: 'description', content: 'Manage all your Bunny.net assets (images, videos, PDFs) in one place! This free tool simplifies your workflow with easy uploads, organisation, and file deletion' }
     ],

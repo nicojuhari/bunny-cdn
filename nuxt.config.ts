@@ -2,10 +2,9 @@
 
 
 const appConfig = {
-    metaTitle: "Your Business Website Title",
-    metaDescription: "Your business website description",
-    googleSiteVerification: "xxx",
-    domainName: "https://nicojuhari.com",
+    metaTitle: "Better UI for Bunny CDN",
+    metaDescription: "Simple Bunny CDN Asset Management Upload, Organize, and Share. Take Control of Your Bunny.net CDN Assets from a sinlge UI.",
+    domainName: "https://bunny-cdn.netlify.app/",
 }
 
 export default defineNuxtConfig({
@@ -18,21 +17,22 @@ export default defineNuxtConfig({
       titleTemplate: '%pageTitle',
       link: [
           { rel: 'icon', type:'image/x-icon', href: '/favicon.ico' },
-          // { rel: 'shortcut icon', type:'image/png', sizes:"32x32", href:"/favicon-32x32.png" },
-          // { rel: 'shortcut icon', type:'image/png', sizes:"16x16", href:"/favicon-16x16.png" },
-          // { rel: 'apple-touch-icon', sizes:"180x180", href:"/apple-touch-icon.png" }
+          { rel: 'shortcut icon', type:'image/png', sizes:"32x32", href:"/favicon-32x32.png" },
+          { rel: 'shortcut icon', type:'image/png', sizes:"16x16", href:"/favicon-16x16.png" },
+          { rel: 'apple-touch-icon', sizes:"180x180", href:"/apple-touch-icon.png" }
       ],
       meta: [
             { name: 'description', content: appConfig.metaDescription as string },
           // { name: 'google-site-verification', content: appConfig.googleSiteVerification as string},
       ],
+      script: [
+              { src:"https://cdn.splitbee.io/sb.js", async: ''}
+            ]
     },
   },
   runtimeConfig: {
-    web3formsAccessKey: '9073abb9-1e1e-44dc-8cbf-03d564fdc9df',
     public: {
       siteUrl: appConfig.domainName as string,
-      storyblok_mode: process.env.storyblok_mode as 'draft' | 'published',
     }
   },
   site: {
