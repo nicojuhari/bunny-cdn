@@ -77,7 +77,7 @@ const deleteFolder = async () => {
                         class="w-full h-full">
                         <StorageFileType v-if="showImages" :fileName="item.ObjectName" :baseURL="baseURL"></StorageFileType>
                         <div v-else class="aspect-square flex flex-col justify-center p-2">
-                            <UIcon name="i-ph-image-light" class="w-2/3 mx-auto h-auto text-gray-300 block" dynamic />
+                            <UIcon name="i-ph-image-light" class="w-[70%] h-[70%] mx-auto text-gray-300 block" />
                             <span class="truncate text-center text-md">{{ item.ObjectName }}</span>
                         </div>
                     </div>
@@ -94,7 +94,7 @@ const deleteFolder = async () => {
             <div v-if="currentPath == ''">You are currently in the root folder</div>
             <div v-else class="flex items-center">
                 <div>You are currently in the folder: <span class="font-bold">{{ currentPath }}</span></div>
-                <UButton color="red" size="xs" class="ml-auto !text-white cursor-pointer shrink-0" @click="deleteFolder"
+                <UButton color="error" variant="soft" class="ml-auto cursor-pointer shrink-0" @click="deleteFolder"
                     title="Delete this folder">
                     <Icon name="ph:trash-light" class="w-6 h-6" /> Delete this Folder
                 </UButton>

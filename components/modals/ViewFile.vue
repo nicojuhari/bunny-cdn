@@ -66,7 +66,7 @@ const deleteImage = async () => {
             <div class="flex flex-col text-center" v-if="checkFileType(imgObj?.ObjectName) == 'image'"><span class="text-sm">W x H </span><strong>{{ imgDimensions.width }}px x {{ imgDimensions.height }}px </strong></div>
             <div class="flex flex-col text-center"><span class="text-sm">Created at </span><strong>{{ new Date(imgObj?.DateCreated).toLocaleDateString() }}</strong> </div>
         </div>
-       <div class="flex mt-6 w-full gap-6 justify-end">
+       <div class="flex pt-6 w-full gap-6 justify-end">
                         <UButton variant="soft" color="error" square @click="deleteImage" icon="i-ph-trash-light">
                         </UButton>
                         <UButton  color="neutral" variant="soft" @click="copyToClipboard" class="cursor-pointer">
