@@ -62,4 +62,7 @@ export default defineNuxtConfig({
     },
     colorMode: false
   },
+  routeRules: {
+    '/': { prerender: true },
+  },
 })
